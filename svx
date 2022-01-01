@@ -1,0 +1,15 @@
+#!/bin/bash 
+echo Stopping svxlink service, if running...
+sudo systemctl stop svxlink
+#sudo systemctl stop svxreflector
+echo Enabling GPIO ports...
+sudo systemctl start svxlink_gpio_setup
+#echo Starting svxreflector
+#sudo systemctl start svxreflector
+echo Starting svxlink...
+sudo -u svxlink ASYNC_AUDIO_ALSA_ZEROFILL=1 svxlink
+echo svxlink terminated
+echo Disabling GPIO ports...
+sudo systemctl stop svxlink_gpio_setup
+sudo systemctl stop svxreflector
+

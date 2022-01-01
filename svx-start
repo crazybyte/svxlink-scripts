@@ -1,0 +1,7 @@
+#!/bin/bash 
+#echo Starting svxreflector service...
+#sudo systemctl start svxreflector
+echo Starting svxlink service...
+sudo systemctl start svxlink
+echo svxlink service started!
+svx-check

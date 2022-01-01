@@ -1,0 +1,7 @@
+#!/bin/bash 
+echo Stopping svxlink service...
+sudo systemctl stop svxlink
+#echo Stoppling svxreflector service...
+#sudo systemctl stop svxreflector
+#echo svxlink service stopped!
+svx-check

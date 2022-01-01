@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo "================ Syncronizing ================"
+
+cd ~/svxlink
+git pull
+
+echo "================ Building ================"
+
+mkdir ~/svxlink/src/build
+cd ~/svxlink/src/build
+cmake -DUSE_QT=OFF -DCMAKE_INSTALL_PREFIX=/opt/svxlink -DSYSCONF_INSTALL_DIR=/etc -DLOCAL_STATE_DIR=/var -DWITH_SYSTEMD=ON ..
+make -j4
+make doc
+make man
+make async-doc
+
+echo "================ Installing ================"
+
+sudo make install
+
+echo "================ Caching libraries ================"
+
+sudo echo "/opt/svxlink/lib/" > /etc/ld.so.conf.d/svxlink.libs.conf
+sudo ldconfig
+
+echo "================ Finished ================"

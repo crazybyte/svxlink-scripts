@@ -1,0 +1,27 @@
+#!/bin/bash
+sudo apt update
+sudo apt install g++ cmake make libsigc++-2.0-dev libgsm1-dev libpopt-dev tcl-dev libgcrypt20-dev libspeex-dev libasound2-dev libopus-dev librtlsdr-dev doxygen groff alsa-utils vorbis-tools curl libcurl4-openssl-dev git rtl-sdr libcurl4-openssl-dev libjsoncpp-dev
+sudo apt install libgpiod-dev gpiod
+sudo useradd -U -r -G audio,plugdev,daemon svxlink
+#sudo adduser svxlink audio
+#sudo adduser svxlink plugdev
+sudo adduser svxlink gpio
+sudo adduser svxlink svxlink
+#sudo adduser svxlink daemon
+cd ~
+git clone https://github.com/sm0svx/svxlink.git
+mkdir ~/svxlink/src/build
+cd ~/svxlink/src/build
+cmake -DUSE_QT=OFF -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONF_INSTALL_DIR=/etc -DLOCAL_STATE_DIR=/var -DWITH_SYSTEMD=ON ..
+make
+make doc
+sudo make install
+sudo ldconfig
+cd /usr/share/svxlink/sounds/
+sudo curl -LO https://github.com/sm0svx/svxlink-sounds-sv_SE-elin/releases/download/19.09.99.1/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2
+sudo tar xvjf svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2
+sudo ln -s sv_SE-elin-16k sv_SE
+cd /usr/share/svxlink/sounds/
+sudo curl -LO https://github.com/sm0svx/svxlink-sounds-en_US-heather/releases/download/19.09.99.1/svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2
+sudo tar xvjf svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2
+sudo ln -s en_US-heather-16k en_US
