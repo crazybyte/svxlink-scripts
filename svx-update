@@ -3,7 +3,7 @@
 echo "================ Syncronizing ================"
 
 cd ~/svxlink
-git pull
+git pull origin
 
 echo "================ Building ================"
 
