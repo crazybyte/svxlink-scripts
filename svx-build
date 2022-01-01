@@ -3,21 +3,25 @@
 echo "================ Installing dependencies ================"
 
 sudo apt update
-sudo apt install g++ cmake make libsigc++-2.0-dev libgsm1-dev libpopt-dev tcl-dev libgcrypt20-dev libspeex-dev libasound2-dev libopus-dev librtlsdr-dev doxygen groff alsa-utils vorbis-tools curl libcurl4-openssl-dev git rtl-sdr libcurl4-openssl-dev libjsoncpp-dev
-sudo apt install libgpiod-dev gpiod
-sudo apt install g++ cmake make build-essential libsigc++-2.0-dev libgsm1-dev libpopt-dev tcl8.6-dev libgcrypt20-dev libspeex-dev libasound2-dev \
+sudo apt install -y  g++ cmake make libsigc++-2.0-dev libgsm1-dev libpopt-dev tcl-dev libgcrypt20-dev libspeex-dev libasound2-dev libopus-dev librtlsdr-dev \
+doxygen groff alsa-utils vorbis-tools curl libcurl4-openssl-dev git rtl-sdr libcurl4-openssl-dev libjsoncpp-dev libgpiod-dev gpiod \
+g++ cmake make build-essential libsigc++-2.0-dev libgsm1-dev libpopt-dev tcl8.6-dev libgcrypt20-dev libspeex-dev libasound2-dev \
 libopus-dev librtlsdr-dev doxygen vorbis-tools curl libcurl4-openssl-dev git rtl-sdr libcurl4-openssl-dev cmake libjsoncpp-dev libusb-1.0-doc \
 libasyncaudio-dev libasynccore-dev libasyncqt-dev libecholib-dev libaudio2 libpulse0 libsndio7.0  lrzip libasound2-doc libcurl4-doc libidn11-dev \
 libkrb5-dev libldap2-dev librtmp-dev libssh2-1-dev libgcrypt20-doc opus-tools libthai0 qt5-image-formats-plugins qtwayland5 libsigc++-2.0-doc speex \
-tcl8.6-doc cmake-doc ninja-build doxygen-latex doxygen-doc graphviz libsndio-dev
-apt install libasynccpp1.5 libasynccpp-dev libtcl8.6
-apt install libogg-dev libogg0
-apt install groff libsigc++-2.0-dev libspeex-dev libopus-dev doxygen
+tcl8.6-doc cmake-doc ninja-build doxygen-latex doxygen-doc graphviz libsndio-dev libasynccpp1.6 libasynccpp-dev libtcl8.6 \
+libogg-dev libogg0 groff libsigc++-2.0-dev libspeex-dev libopus-dev doxygen psutils \
+ghostscript imagemagick libpaper1 netpbm psutils libusb-1.0-doc
 
 echo "================ Creating groups and users ================"
 
-sudo groupadd -r audio,plugdev,daemon,gpio,dialout
-seradd -c 'Svxlink-related Daemons' -d /opt/svxlink -M -r -s /usr/sbin/false svxlink
+sudo groupadd -r audio
+sudo groupadd -r plugdev
+sudo groupadd -r daemon
+sudo groupadd -r gpio
+sudo groupadd -r dialout
+
+useradd -c 'Svxlink-related Daemons' -d /opt/svxlink -M -r -s /usr/bin/false svxlink
 usermod -aG daemon,dialout,audio,plugdev,gpio svxlink
 
 echo "================ Cloning repositories ================"
@@ -52,8 +56,11 @@ echo "================ Installing sound files ================"
 mkdir /opt/svxlink/sounds
 cd /opt/svxlink/sounds/
 
-sudo wget -c https://github.com/sm0svx/svxlink-sounds-svxlink_SE-elin/releases/download/19.09.99.1/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2 -O /opt/svxlink/sounds/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2
-sudo wget -c https://github.com/sm0svx/svxlink-sounds-en_US-heather/releases/download/19.09.99.1/svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2 -O /opt/svxlink/sounds/svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2
+sudo wget -c 
+https://github.com/sm0svx/svxlink-sounds-sv_SE-elin/releases/download/19.09.99.1/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2 \
+-O /opt/svxlink/sounds/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2
+sudo wget -c https://github.com/sm0svx/svxlink-sounds-en_US-heather/releases/download/19.09.99.1/svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2 \
+-O /opt/svxlink/sounds/svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2
 cd /opt/svxlink/sounds/
 sudo tar xvjf svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2
 sudo tar xvjf svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2
