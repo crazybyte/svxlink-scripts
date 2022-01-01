@@ -15,14 +15,7 @@ ghostscript imagemagick libpaper1 netpbm psutils libusb-1.0-doc
 
 echo "================ Creating groups and users ================"
 
-sudo useradd -U -r audio
-sudo useradd -U -r plugdev
-sudo useradd -U -r daemon
-sudo useradd -U -r gpio
-sudo useradd -U -r dialout
-
-useradd -c 'Svxlink-related Daemons' -d /opt/svxlink -M -r -s /usr/bin/false svxlink
-usermod -aG daemon,dialout,audio,plugdev,gpio svxlink
+sudo useradd -U -r -G audio,plugdev,daemon,gpio,dialout -c 'Svxlink-related Daemons' -d /opt/svxlink -M -s /usr/bin/false svxlink
 
 echo "================ Cloning repositories ================"
 
