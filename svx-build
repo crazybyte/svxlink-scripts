@@ -15,7 +15,7 @@ ghostscript imagemagick libpaper1 netpbm psutils libusb-1.0-doc
 
 echo "================ Creating groups and users ================"
 
-sudo useradd -U -r -G audio,plugdev,daemon,gpio,dialout -c 'Svxlink-related Daemons' -d /opt/svxlink -M -s /usr/bin/false svxlink
+sudo useradd -U -r -G audio,plugdev,daemon,gpio,dialout -c 'Svxlink-related Daemons' -d /tmp -M -s /usr/bin/false svxlink
 
 echo "================ Cloning repositories ================"
 
@@ -28,7 +28,7 @@ cd ~/svxlink/src/build
 
 echo "================ Building ================"
 
-cmake -DUSE_QT=OFF -DCMAKE_INSTALL_PREFIX=/opt/svxlink -DSYSCONF_INSTALL_DIR=/etc -DLOCAL_STATE_DIR=/var -DWITH_SYSTEMD=ON ..
+cmake -DUSE_QT=OFF -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONF_INSTALL_DIR=/etc -DLOCAL_STATE_DIR=/var -DWITH_SYSTEMD=ON ..
 make -j4
 make doc
 make man
@@ -40,20 +40,15 @@ sudo make install
 
 echo "================ Caching libraries ================"
 
-sudo echo "/opt/svxlink/lib/" > /etc/ld.so.conf.d/svxlink.libs.conf
 sudo ldconfig
 
 echo "================ Installing sound files ================"
 
-mkdir /opt/svxlink/sounds
-cd /opt/svxlink/sounds/
-
-sudo wget -c 
-https://github.com/sm0svx/svxlink-sounds-sv_SE-elin/releases/download/19.09.99.1/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2 \
--O /opt/svxlink/sounds/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2
+sudo wget -c https://github.com/sm0svx/svxlink-sounds-sv_SE-elin/releases/download/19.09.99.1/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2 \
+-O /usr/share/svxlink/sounds/svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2
 sudo wget -c https://github.com/sm0svx/svxlink-sounds-en_US-heather/releases/download/19.09.99.1/svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2 \
--O /opt/svxlink/sounds/svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2
-cd /opt/svxlink/sounds/
+-O /usr/share/svxlink/sounds/svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2
+cd /usr/share/svxlink/sounds/
 sudo tar xvjf svxlink-sounds-sv_SE-elin-16k-19.09.99.1.tar.bz2
 sudo tar xvjf svxlink-sounds-en_US-heather-16k-19.09.99.1.tar.bz2
 
